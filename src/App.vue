@@ -1,5 +1,20 @@
-<template>Web3D</template>
+<template>
+    <router-view></router-view>
+</template>
 
 <script setup lang="ts"></script>
 
-<style></style>
+<style>
+html,
+body,
+#app {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+ul {
+    margin: 0;
+    padding: 0;
+}
+</style>

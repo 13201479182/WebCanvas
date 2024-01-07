@@ -150,7 +150,7 @@ module.exports = {
                 },
             },
             extends: ['plugin:vue/vue3-recommended', 'prettier'],
-            rules: Object.assign({}, jsRules, tsRules, vueRules),
+            rules: Object.assign({}, jsRules, tsRules),
             plugins: ['eslint-plugin-vue', 'prettier'],
         },
     ],

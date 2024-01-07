@@ -1,9 +1,9 @@
 const menus = [
     {
-        path: '/demo',
-        component: () => import('@/components/Demo.vue'),
+        path: '/draw-point',
+        component: () => import('@/components/DrawPoint.vue'),
         meta: {
-            name: 'demo',
+            name: 'Point',
         },
     },
 ];

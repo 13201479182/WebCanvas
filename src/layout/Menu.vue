@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <el-menu mode="horizontal" router>
+        <el-menu mode="horizontal" router :default-active="activePath">
             <el-menu-item v-for="menu in menuList" :index="menu.path">
                 {{ menu.name }}
             </el-menu-item>
@@ -14,7 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+
 import menus from '@/route/menus';
 
 const menuList = computed(() => {
@@ -28,6 +30,21 @@ const menuList = computed(() => {
     } else {
         return [];
     }
+});
+
+const activePath = computed(() => {
+    const firstMenu = menuList.value[0];
+    if (firstMenu) {
+        return firstMenu.path;
+    } else {
+        return '/';
+    }
+});
+
+// 重定向
+const router = useRouter();
+router.push({
+    path: activePath.value,
 });
 </script>
 

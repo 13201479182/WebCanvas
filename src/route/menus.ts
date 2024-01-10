@@ -6,6 +6,13 @@ const menus = [
             name: 'Point',
         },
     },
+    {
+        path: '/draw-line',
+        component: () => import('@/components/DrawLine.vue'),
+        meta: {
+            name: 'Line',
+        },
+    },
 ];
 
 export default menus;

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
+import { nextTick, onMounted, reactive, ref } from 'vue';
 
 const pointRef = ref<HTMLDivElement>();
 const attr = reactive({
@@ -19,7 +19,7 @@ onMounted(() => {
         const { width, height } = containter.getBoundingClientRect();
         attr.width = width;
         attr.height = height - 3;
-        init();
+        nextTick(init);
     }
 });
 

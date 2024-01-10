@@ -33,7 +33,7 @@ function init() {
         const orthoMat4 = initWebGL(webgl);
         // 2. 创建shader
         const shaders: (WebGLShader | null)[] = initShader(webgl);
-        // 3. 创建程序序
+        // 3. 创建程序
         const program = initProgram(webgl, shaders);
         // 3. 将数据应用于program
         initBuffer(webgl, program, orthoMat4);

@@ -20,6 +20,13 @@ const menus = [
             name: 'Triangle',
         },
     },
+    {
+        path: '/draw-polygon',
+        component: () => import('@/components/DrawPolygon.vue'),
+        meta: {
+            name: 'Polygon',
+        },
+    },
 ];
 
 export default menus;

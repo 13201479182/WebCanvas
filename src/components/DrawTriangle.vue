@@ -1,5 +1,5 @@
 <template>
-    <div ref="lineRef" class="line">
+    <div ref="triangleRef" class="triangle">
         <canvas ref="canvasRef" v-bind="attr"></canvas>
     </div>
 </template>
@@ -8,7 +8,7 @@
 import { nextTick, onMounted, reactive, ref } from 'vue';
 import { mat4 } from 'gl-matrix';
 
-const lineRef = ref<HTMLDivElement>();
+const triangleRef = ref<HTMLDivElement>();
 const canvasRef = ref<HTMLCanvasElement>();
 const attr = reactive({
     width: 0,
@@ -16,7 +16,7 @@ const attr = reactive({
 });
 
 onMounted(() => {
-    const containter = lineRef.value;
+    const containter = triangleRef.value;
     if (containter) {
         const { width, height } = containter.getBoundingClientRect();
         attr.width = width;
@@ -41,7 +41,7 @@ function initShader(webgl: WebGLRenderingContext) {
     `;
     const fragmentString = `
         void main() {
-            gl_FragColor = vec4(0, 0, 1.0, 1.0);
+            gl_FragColor = vec4(1.0, 0, 1.0, 1.0);
         }
     `;
 
@@ -78,17 +78,20 @@ function initBuffer(webgl: WebGLRenderingContext, program: WebGLProgram) {
 
     // prettier-ignore
     const points = new Float32Array([
-        // 线段
-        100.0, 100.0, 0, 1.0, 
-        300.0, 300.0, 0, 1.0, 
-        // 线条
-        100.0, 300.0, 0, 1.0, 
-        400.0, 600.0, 0, 1.0,
-        800.0, 300.0, 0, 1.0,
-        // 线圈
-        700.0, 400.0, 0, 1.0, 
-        400.0, 800.0, 0, 1.0,
-        800.0, 600.0, 0, 1.0,
+        // 三角形 TRIANGLES
+        100.0, 100.0, 0, 1.0,
+        300.0, 300.0, 0, 1.0,
+        100.0, 300.0, 0, 1.0,
+        // 三角带 TRIANGLE_STRIP
+        500.0, 200.0, 0, 1.0,
+        500.0, 500.0, 0, 1.0,
+        700.0, 350.0, 0, 1.0,
+        800.0, 800.0, 0, 1.0,
+        // 三角扇 TRIANGLE_FAN
+        100, 600, 0, 1.0,
+        200, 500, 0, 1.0,
+        300, 600, 0, 1.0, 
+        200, 900, 0, 1.0,
     ]);
 
     const buffer = webgl.createBuffer();
@@ -109,12 +112,12 @@ function draw(webgl: WebGLRenderingContext) {
     webgl.clearColor(1.0, 1.0, 1.0, 1.0);
     webgl.clear(webgl.COLOR_BUFFER_BIT);
 
-    // 绘制线段(成对的点)
-    webgl.drawArrays(webgl.LINES, 0, 2);
-    // 绘制线条(不会闭环的线条)
-    webgl.drawArrays(webgl.LINE_STRIP, 2, 3);
-    // 绘制线圈(首尾自动闭合的线条)
-    webgl.drawArrays(webgl.LINE_LOOP, 5, 3);
+    // 绘制三角形
+    webgl.drawArrays(webgl.TRIANGLES, 0, 3);
+    // 绘制三角带(三角形后两个点与下一个点构成的三角形)
+    webgl.drawArrays(webgl.TRIANGLE_STRIP, 3, 4);
+    // 绘制三角扇(三角型后一条边与下一个点构成的三角形)
+    webgl.drawArrays(webgl.TRIANGLE_FAN, 7, 4);
 }
 
 function init() {
@@ -135,7 +138,7 @@ function init() {
 </script>
 
 <style lang="less" scoped>
-.line {
+.triangle {
     width: 100%;
     height: 100%;
 }

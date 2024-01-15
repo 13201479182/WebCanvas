@@ -13,6 +13,13 @@ const menus = [
             name: 'Line',
         },
     },
+    {
+        path: '/draw-triangle',
+        component: () => import('@/components/DrawTriangle.vue'),
+        meta: {
+            name: 'Triangle',
+        },
+    },
 ];
 
 export default menus;
